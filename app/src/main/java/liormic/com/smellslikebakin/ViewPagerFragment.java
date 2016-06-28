@@ -10,7 +10,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 /**
  * Created by Liorm on 6/19/2016.
@@ -31,13 +30,21 @@ public class ViewPagerFragment extends Fragment {
       int index = getArguments().getInt(KEY_RECIPE_INDEX);
         getActivity().setTitle(Recpies.names[index]);
         View view = inflater.inflate(R.layout.fragmet_viewpager,container,false);
-        final IngredientsFragment ingerdientsFragment = new IngredientsFragment();
+        final IngridientsFragment ingerdientsFragment = new IngridientsFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(KEY_RECIPE_INDEX,index);
+
         ingerdientsFragment.setArguments(bundle);
         final DirectionsFragment directionsFragment = new DirectionsFragment();
+        bundle = new Bundle();
+        bundle.putInt(KEY_RECIPE_INDEX,index);
+
+        directionsFragment.setArguments(bundle);
+
+        
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewPager);
         viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
+
             @Override
             public Fragment getItem(int position) {
 

@@ -12,32 +12,35 @@ import android.widget.LinearLayout;
 /**
  * Created by Liorm on 6/19/2016.
  */
-public class IngredientsFragment extends Fragment {
+public abstract class CheckBoxesFragment extends Fragment {
     private static final String KEY_CHECKED_BOXES = "key_checked_boxes";
     private  CheckBox[] mCheckBoxes;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
      int index = getArguments().getInt(ViewPagerFragment.KEY_RECIPE_INDEX);
+          View view = inflater.inflate(R.layout.fragment_checboxes,container,false);
+        LinearLayout linearLayout= (LinearLayout) view.findViewById(R.id.checkboxesLayout);
+String[] contents =getContents(index);
 
-          View view = inflater.inflate(R.layout.fragment_ingridents,container,false);
-        LinearLayout linearLayout= (LinearLayout) view.findViewById(R.id.ingridentsLayout);
-String[] ingredients = Recpies.ingredients[index].split("`");
- mCheckBoxes=new CheckBox[ingredients.length];
+ mCheckBoxes=new CheckBox[contents.length];
         boolean[] checkedBoxes= new boolean[mCheckBoxes.length];
         if(savedInstanceState!= null && savedInstanceState.getBooleanArray(KEY_CHECKED_BOXES)!= null){
             checkedBoxes = savedInstanceState.getBooleanArray(KEY_CHECKED_BOXES);
         }
-setUpCheckBoxes(ingredients,linearLayout,checkedBoxes);
+setUpCheckBoxes(contents,linearLayout,checkedBoxes);
         return view;
     }
-    private  void setUpCheckBoxes(String[] ingredients, ViewGroup container, boolean[] checkedBoxes){
+
+    public abstract String[] getContents(int index) ;
+
+    private  void setUpCheckBoxes(String[] contents, ViewGroup container, boolean[] checkedBoxes){
         int i=0;
-for(String ingredient :ingredients){
+for(String content :contents){
      mCheckBoxes[i]= new CheckBox(getActivity());
     mCheckBoxes[i].setPadding(8,16,8,16);
     mCheckBoxes[i].setTextSize(20f);
-    mCheckBoxes[i].setText(ingredient);
+    mCheckBoxes[i].setText(content);
        container.addView(mCheckBoxes[i]);
     if(checkedBoxes[i]){
         mCheckBoxes[i].toggle();
