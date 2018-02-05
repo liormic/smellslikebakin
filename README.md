@@ -1,2 +1,2 @@
 # smellslikebakin
-A simple recepie app based on threehouse course
+A simple recepie app based on treehouse course
